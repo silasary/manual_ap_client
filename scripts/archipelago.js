@@ -141,10 +141,12 @@ client.addListener(SERVER_PACKET_TYPE.BOUNCED, (packet) => {
     }
     const currTime = `${hours}:${minutes}:${seconds}`
 
-    var deathTxt = "DEATH sent by " + packet['data']['source'] + " (" + currTime + ")";
+    if (packet['tags'] !== undefined && packet['tags'].includes('DeathLink')) {
+        var deathTxt = "DEATH sent by " + packet['data']['source'] + " (" + currTime + ")";
 
-    var oldmsg = document.getElementById('log').innerHTML;
-    document.getElementById('log').innerHTML = "<div class='textMsg' style='background-color: red;'>" + deathTxt + "</div>" + oldmsg + "";
+        var oldmsg = document.getElementById('log').innerHTML;
+        document.getElementById('log').innerHTML = "<div class='textMsg' style='background-color: red;'>" + deathTxt + "</div>" + oldmsg + "";
+    }
 })
 
 //Send DeathLink
