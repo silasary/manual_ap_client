@@ -16,9 +16,9 @@ const connectionInfo = {
     name: sessionStorage.getItem('player'), // Replace with the player slot name.
     items_handling: ITEMS_HANDLING_FLAGS.REMOTE_ALL,
     version: {
-        build: 5,
+        build: 1,
         major: 0,
-        minor: 4,
+        minor: 6,
     },
     tags: JSON.parse(sessionStorage.getItem('tags'))//tags: ['AP', 'DeathLink', '(WIP)']
 };
@@ -36,7 +36,7 @@ client.addListener(SERVER_PACKET_TYPE.CONNECTED, (packet) => {
         //console.log(client.items.received);
         hideLocations();
         if (!JSON.parse(sessionStorage.getItem('tags')).includes('DeathLink')) {
-            $("#deathlinkContainer").hide();
+            $("#deathlink").hide();
         }
     }, 500);
 });
@@ -84,9 +84,9 @@ function getHints() {
 
 //Add listener for marking checks on the server
 document.querySelectorAll('.locations').forEach(el => el.addEventListener('click', event => {
-    if (event.target.getAttribute('data-el') != locIDs[locIDs.length - 1]) {
-        client.locations.check(parseInt(event.target.getAttribute('data-el')));
-    } else {
+    if (parseInt(event.target.getAttribute('data-el')) == 999999999999999) {
+        console.log('test')
+        client.say(sessionStorage.getItem('player') + " has finished their game!")
         for (var i = 0; i < locIDs.length - 1; i++) {
             client.locations.check(parseInt(locIDs[i]));
             for (var j = 0; j < document.getElementsByClassName("locations").length; j++) {
@@ -94,6 +94,10 @@ document.querySelectorAll('.locations').forEach(el => el.addEventListener('click
                     document.getElementsByClassName('locations')[j].style.display = 'none';
                 }
             }
+        }
+    } else {
+        if (event.target.getAttribute('data-el') != locIDs[locIDs.length]) {
+            client.locations.check(parseInt(event.target.getAttribute('data-el')));
         }
     }
     for (var j = 0; j < document.getElementsByClassName("locations").length; j++) {
@@ -159,6 +163,8 @@ document.getElementById('deathlink').addEventListener("click", () => {
 client.addListener(SERVER_PACKET_TYPE.RECEIVED_ITEMS, (packet) => {
     var packetItems = packet.items;
 
+    console.log(packet)
+
     for (i in packet.items) {
         hintItemsFound.push(packet.items[i]["item"]);
     }
@@ -172,9 +178,12 @@ client.addListener(SERVER_PACKET_TYPE.RECEIVED_ITEMS, (packet) => {
             var currentCount = parseInt(document.getElementsByClassName(receivedItem)[j].innerHTML);
             document.getElementsByClassName(receivedItem)[j].innerHTML = currentCount + 1;
             if (receivedItem != 0) {
-                if (document.getElementsByClassName(receivedItem + "2")[j]) {
-                    document.getElementsByClassName(receivedItem + "2")[j].classList.remove('is-hidden');
+                if (document.getElementsByClassName("0" + receivedItem)[j]) {
+                    document.getElementsByClassName("0" + receivedItem)[j].classList.remove('is-hidden');
                 }
+            }
+            if (document.getElementsByClassName("0" + receivedItem).length == 2) {
+                document.getElementsByClassName("0" + receivedItem)[1].classList.remove('is-hidden');
             }
         }
     }

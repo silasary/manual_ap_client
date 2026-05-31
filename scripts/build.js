@@ -1,16 +1,21 @@
-var versionTag = "Archipelago Web Client v0.4.5 Build 20240414 Built by <a style='color:white;' href='https://github.com/rampantepsilon'>RampantEpsilon</a>";
+var versionTag = "Archipelago Web Client v0.6.1 Build 20250630 Built by <a style='color:white;' href='https://github.com/rampantepsilon'>RampantEpsilon</a>";
 
 document.getElementById('buildText').innerHTML = versionTag;
 
 document.getElementById('changelog').innerHTML = `<h4>Please note: Manual Archipelago is not part of the main Archipelago. Any issues with the web client or manuals in general should be asked in the <a href='https://discord.gg/T5bcsVHByx' style='color:white'>Manual Archipelago Discord Server</a></h4>
 <h3>Changes to ` + versionTag + `</h3>
 <ul>
-<li>Added update for v0.4.5 of Archipelago</li>
+<li>Added update for v0.6.1 of Archipelago</li>
+<li>HOTFIX: Fixed issue where tracker would break upon joining server.</li>
+<li>HOTFIX: Fixed issue where certain items would be overwritten accidentally causing them to not show up properly.</li>
 </ul>
 <h4>Known Issues</h4>
 <ul>
+<li>Victory button cannot be hidden.</li>
+<li>Hints not retaining marked status upon chat refresh.</li>
 <li>Possible issue with Traps not showing proper colors.</li>
-<li>Hints not showing proper coloring. (Should be updated on the next release.)</li>
+<li>Hints not showing proper coloring. </li>
+<li>Items not retaining marked status upon refresh.</li>
 </ul>`
 
 // Get the modal
